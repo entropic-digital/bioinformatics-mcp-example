@@ -12,5 +12,7 @@ COPY . /app/
 
 RUN mkdir -p /app/data /app/results
 
-ENTRYPOINT ["/usr/local/bin/_entrypoint.sh"]
-CMD ["bash"]
+ARG MAMBA_DOCKERFILE_ACTIVATE=1
+ENV MAMBA_DEFAULT_ENV=bio-agent
+
+CMD ["micromamba", "run", "-n", "bio-agent", "python", "biotools_server.py"]
