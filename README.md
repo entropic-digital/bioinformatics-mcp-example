@@ -14,8 +14,15 @@ claude_desktop_config.json
 {
   "mcpServers": {
     "biotools-mcp": {
-      "url": "http://localhost:8080",
-      "mountPath": "/Users/dionizijefa/Documents/entropic-dev/bioinformatics-mcp/data"
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-v",
+        "/Users/dionizijefa/Documents/entropic-dev/bioinformatics-mcp/data:/data",
+        "biotools-mcp"
+      ]
     }
   }
 }
