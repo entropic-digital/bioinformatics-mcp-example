@@ -20,7 +20,7 @@ claude_desktop_config.json
         "-i",
         "--rm",
         "-v",
-        "/Users/dionizijefa/Documents/entropic-dev/bioinformatics-mcp/data:/data",
+        "path/to/this/github/repo:/app",
         "biotools-mcp"
       ]
     }

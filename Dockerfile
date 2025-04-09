@@ -6,8 +6,6 @@ RUN micromamba create -y -f /tmp/environment.yml
 
 WORKDIR /app
 
-COPY data /app/data
-
 COPY . /app/
 
 RUN mkdir -p /app/data /app/results
