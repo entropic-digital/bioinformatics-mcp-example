@@ -1,6 +1,5 @@
 from mcp.server.fastmcp import FastMCP
 import sys
-import os
 
 
 from tools import (
@@ -8,6 +7,7 @@ from tools import (
     salmon_index_tool,
     salmon_quantify_tool,
     read_directory_tool,
+    read_file_lines_tool,
 )
 
 
@@ -95,6 +95,25 @@ async def list_directory(directory_path: str) -> str:
     except Exception as e:
         print(f"Error in list_directory: {str(e)}", file=sys.stderr)
         return f"Error listing directory: {str(e)}"
+
+
+@mcp.tool()
+async def read_file_lines(file_path: str) -> str:
+    """
+    Read lines from a specified file.
+
+    Args:
+        file_path: Path to the file to read
+    """
+    try:
+        result = read_file_lines_tool(file_path)
+        if isinstance(result, str) and not result.startswith("Error"):
+            return result  # Return the file content
+        else:
+            return f"Error reading file: {result}"
+    except Exception as e:
+        print(f"Error in read_file_lines: {str(e)}", file=sys.stderr)
+        return f"Error reading file: {str(e)}"
 
 
 if __name__ == "__main__":

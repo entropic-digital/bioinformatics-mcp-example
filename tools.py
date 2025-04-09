@@ -6,18 +6,18 @@ from pathlib import Path
 def fastqc_tool(input_file: str, output_dir: str) -> Dict[str, Union[str, int]]:
     """
     Perform quality control using FastQC on FASTQ files.
-    
+
     Args:
         input_file: Path to the FASTQ file
         output_dir: Directory where FastQC results will be stored
-        
+
     Returns:
         Dictionary containing stdout, stderr, and return code
     """
     result = subprocess.run(
         ["fastqc", input_file, "-o", output_dir], capture_output=True, text=True
     )
-    
+
     return {
         "stdout": result.stdout,
         "stderr": result.stderr,
@@ -25,14 +25,16 @@ def fastqc_tool(input_file: str, output_dir: str) -> Dict[str, Union[str, int]]:
     }
 
 
-def salmon_index_tool(transcript_fasta: str, index_dir: str) -> Dict[str, Union[str, int]]:
+def salmon_index_tool(
+    transcript_fasta: str, index_dir: str
+) -> Dict[str, Union[str, int]]:
     """
     Create a Salmon index from a transcript FASTA file
-    
+
     Args:
         transcript_fasta: Path to the transcript FASTA file
         index_dir: Directory where the Salmon index will be created
-        
+
     Returns:
         Dictionary containing stdout, stderr, and return code
     """
@@ -48,15 +50,17 @@ def salmon_index_tool(transcript_fasta: str, index_dir: str) -> Dict[str, Union[
     }
 
 
-def salmon_quantify_tool(index_dir: str, reads: str, output_dir: str) -> Dict[str, Union[str, int]]:
+def salmon_quantify_tool(
+    index_dir: str, reads: str, output_dir: str
+) -> Dict[str, Union[str, int]]:
     """
     Quantify transcript abundances using Salmon
-    
+
     Args:
         index_dir: Path to the Salmon index directory
         reads: Path to the FASTQ reads file
         output_dir: Directory where the quantification results will be stored
-        
+
     Returns:
         Dictionary containing stdout, stderr, and return code
     """
@@ -86,25 +90,47 @@ def salmon_quantify_tool(index_dir: str, reads: str, output_dir: str) -> Dict[st
 def read_directory_tool(directory_path: str) -> str:
     """
     List files and directories within a specified directory path.
-    
+
     Args:
         directory_path: Path to the directory to read
-        
+
     Returns:
-        String representation of the files in the directory with paths 
+        String representation of the files in the directory with paths
         relative to working directory
     """
     try:
         path = Path(directory_path)
         contents = list(path.iterdir())
-        
-        prefix = f"/{directory_path}" if not directory_path.startswith('/') else directory_path
-        prefix = prefix.rstrip('/') 
-        
+
+        prefix = (
+            f"/{directory_path}"
+            if not directory_path.startswith("/")
+            else directory_path
+        )
+        prefix = prefix.rstrip("/")
+
         files = [f"{prefix}/{item.name}" for item in contents if item.is_file()]
         directories = [f"{prefix}/{item.name}/" for item in contents if item.is_dir()]
-        
+
         return str(files + directories)
+    except Exception as e:
+        return str(e)
+
+
+def read_file_lines_tool(file_path: str) -> Union[str, Exception]:
+    """
+    Read lines from a specified file.
+
+    Args:
+        file_path: Path to the file to read
+
+    Returns:
+        String representation of the lines in the file or an error message
+    """
+    try:
+        with open(file_path, "r") as file:
+            lines = file.readlines()
+        return "".join(lines)  # Join lines into a single string
     except Exception as e:
         return str(e)
 
@@ -115,4 +141,5 @@ bioinformatics_tools = [
     salmon_index_tool,
     salmon_quantify_tool,
     read_directory_tool,
+    read_file_lines_tool,
 ]
