@@ -2,13 +2,7 @@
 ```bash
 docker build -t biotools-mcp .
 ```
-2. To run the MCP server
-```bash
-docker run -it --rm \
-    -v /Users/dionizijefa/Documents/entropic-dev/bioinformatics-mcp/data:/data \
-    biotools-mcp
-```
-3. Add it to claude_desktop_config.json
+2. Add it to claude_desktop_config.json
 claude_desktop_config.json
 ```
 {
@@ -17,7 +11,6 @@ claude_desktop_config.json
       "command": "docker",
       "args": [
         "run",
-        "-i",
         "--rm",
         "-v",
         "path/to/this/github/repo:/app",
@@ -27,4 +20,4 @@ claude_desktop_config.json
   }
 }
 ```
-
+3. You can also run it with something like Cursor.
