@@ -12,6 +12,7 @@ claude_desktop_config.json
       "args": [
         "run",
         "--rm",
+        "-i",
         "-v",
         "path/to/this/github/repo:/app",
         "biotools-mcp"
