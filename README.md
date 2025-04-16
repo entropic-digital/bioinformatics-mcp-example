@@ -14,7 +14,7 @@ claude_desktop_config.json
         "--rm",
         "-i",
         "-v",
-        "$(pwd):/app",
+        "path/to/this/github/repo:/app",
         "biotools-mcp"
       ]
     }
